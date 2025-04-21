@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>EzyRental.com</title>
+
+<style>
+
+    body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: poppins, sans-serif;
+    overflow-y: scroll;
+    background-color: rgba(1, 189, 189, 0.1);
+}
+
+.head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    padding: 1.5rem 0;
+    background-color: rgb(1, 189, 189);
+}
+
+.head-middle{
+    display: flex;
+    align-items: center;
+}
+
+.head-left, .head-right{
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.name{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.buy{
+    align-items: center;
+    border: 0.15rem solid white;
+    background-color: white;
+    box-shadow:5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5rem 0 0 5rem;
+    padding: 0.2rem 1.6rem;
+}
+.sell{
+    align-items: center;
+    background-color: black;
+    border: 0.15rem solid black;
+    color: white;
+    border-radius: 0 5rem 5rem 0;
+    padding: 0.2rem 1.6rem;
+}
+
+.buy-sell{
+    display: flex;
+    align-items: center;
+}
+
+.search-container{
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+.search{
+    height: 1.8rem;
+    border: 0.15rem solid white;
+    box-shadow:5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5rem;
+    width: 60vh;
+}
+.search-icon{
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+.search::placeholder{
+    font-size: larger;
+    padding: 0 5rem;
+    color: black;
+}
+.rent{
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    padding: 0.3rem 0.3rem;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background-color: white;
+}
+
+.register-login{
+    display: flex;
+    gap: 1rem;
+}
+.register{
+    align-items: center;
+    border: 0.15rem solid white;
+    box-shadow:5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5rem;
+    padding: 0.2rem 1.8rem;
+    background-color: white;
+}
+.login{
+    align-items: center;
+    background-color: black;
+    box-shadow:5px 5px 5px rgba(0, 0, 0, 0.2);  
+    color: white;
+    border-radius: 5rem;
+    padding: 0.2rem 2.8rem;
+}
+
+.download-container{
+    display: flex;
+    align-items: center;    
+}
+
+.strip{
+    display: flex;
+    justify-content: space-around;
+    padding: 0.2rem 0;
+    background-color: black;
+    color: white;
+}
+
+.main{
+    display: flex;
+    height: 100vh;
+}
+
+.filter{
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    height: max-content;
+    font-weight: 600;
+    padding: 2rem 1rem 0;
+    border: 0.05rem solid white;
+    box-shadow:5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    margin: 2rem 0 0 10rem;
+    background-color: transparent;
+    overflow-y: auto;
+}
+.border{
+    padding: 1rem 0;
+    box-shadow: 0 0.05rem 0 rgba(0, 0, 0, 0.3);
+}
+
+.applied-container{
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.ap{
+    display: flex;
+    justify-content: space-between;
+
+}
+.clear{
+    color: rgb(1, 189, 189);
+}
+.appartment{
+    display: flex;
+    align-items: center;
+    border: 0.1rem solid rgb(1, 189, 189);
+    border-radius: 5rem;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.85rem;
+    width: max-content;
+    padding: 0.3rem 0.8rem;
+    margin: 1rem 0;
+    background-color: rgba(1, 189, 189, 0.3);
+}
+
+.seen{
+    display: flex;
+    justify-content: space-between;
+}
+
+.budget-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.photos-container{
+    display: flex;
+    justify-content: space-between  ;
+}
+
+.verified-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.toggle-container {
+    position: relative;
+    width: 60px;
+    height: 30px;
+}
+.toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 30px;
+    transition: 0.4s;
+}
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+.toggle-input:checked + .toggle-slider {
+    background-color: rgb(1, 189, 189);
+}
+.toggle-input:checked + .toggle-slider:before {
+    transform: translateX(30px);
+}
+
+.resluts-container{
+}
+
+.results{
+    font-size: large;
+    font-weight: 500;
+    padding: 3rem 5rem 1rem;
+}
+
+.below-result{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    padding: 0.5rem 5rem;
+}
+.tags{
+    display: flex;
+    gap: 1rem;
+}
+.tag{
+    display: flex;
+    align-items: center;
+    border: 0.1rem solid rgb(1, 189, 189);
+    border-radius: 5rem;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.85rem;
+    width: max-content;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(1, 189, 189, 0.3);
+}
+
+.by{
+    display: flex;
+    padding: 0 2rem;
+}
+
+
+.house{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 2rem 5rem;
+    overflow-y: auto;
+    height: calc(100vh - 6rem);
+}
+
+.house1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 0.1rem solid white;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.img1{
+    display: flex;
+    width: 24rem;
+    height: 14rem;
+    object-fit: cover;
+    margin: 1.5rem;
+    border-radius: 1rem;
+    border: 0.1rem solid white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.info{
+    background-color: rgba(1, 189, 189, 0.1);
+    box-shadow: inset 5px -5px 20px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+    border-radius: 1rem;
+}
+
+.top{
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 2rem 1.5rem;
+}
+.heading{
+    font-weight: 600;
+}
+
+.row{
+    display: flex;
+    gap: 2rem;
+    padding: 0 2rem;
+}
+.deposit{
+    box-shadow: 0.1rem 0 0 rgba(0, 0, 0, 0.3);
+    padding: 0 2rem 0 0;
+}
+
+.detail{
+    display: flex;
+    color: rgb(1, 189, 189);
+    padding: 1rem 2rem;
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(1, 189, 189, 0.1);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+}
+
+.contact-details{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.number{
+    display: flex;
+    background-color: white;
+    border: 0.15rem solid rgb(1, 189, 189);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    color: rgb(1, 189, 189);
+    padding: 0.4rem 1.5rem;
+    border-radius: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.phone{
+    display: flex;
+    align-items: center;
+    background-color: rgb(1, 189, 189);
+    border: 0.15rem solid rgb(1, 189, 189);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 0.25rem 1.5rem;
+    border-radius: 0.8rem;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.ago{
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+</style>
+    
+</head>
+<body>
+    
+
+    <div class="head">
+
+        <div class="head-left">
+
+            <div class="logo">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAASFJREFUSEvt1b8uBUEUx/HPjUQ0KoUHkIigUUmEhIKotBqegAfwBqLnCeg0CqU/BZGoNEIUHkChEh3hbrKbjHHX7O51GzHlmXN+33NOfpNp6fFp9VhfHcAwLvKG5vBUpbmqgEFcYTIXvcUMXlKQKoB+nGI2ErvEAt5+gqQA2f0RVkpEDrGKjzJICrCLjcQa9rDZBLCF7dSO8/ssd6dTbtkEa9ivKF6kreMgrukEWMYx+moC3ttOW8JZWBcDpnI7DtQUL9Jf247L3shNEQgBI7jGUEPxouwZ03jMAiHgAaNdihfld5iIAfcY+yVApjUeA0Lt0oeTaOCbacps+jcB8bSdpuxqRf+ALwY8x3wQOcFiZNEqObX+5EZvMPXhNBINiz4Bp0ktGQo11VEAAAAASUVORK5CYII="/>
+                <div class="name">EzyRental</div>
+            </div>
+    
+            <div class="buy-sell">
+                <div class="buy">Buy</div>
+                <div class="sell">Sell</div>
+            </div>
+
+        </div>
+
+        <div class="head-middle">
+    
+            <div class="search-container">
+                <select class="rent">
+                    <option value="" disabled selected>Rent</option>
+                    <option value="option1">Rent</option>
+                    <option value="option2">Flat</option>
+                    <option value="option3">PG</option>
+                </select>
+                <input type="text" class="search" placeholder="|   Search here...">
+                <img class="search-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAd5JREFUSEu11cvLTWEUx/HPGxnIpSiXiZAwcIuSAQpFL2XqUgxIURhQBv4AMiEhDCgk5Q+Q0VsImSAlopTIgFwi9+uz6nl1HO/e5xnssya7zn7O+j5rrd9v7R5djp4u51cHmIB1WInZ+SJ3cAkX8LzkcgMBRuAcVtck+I2L2IRPdaB2wFDcwgx8xUkcxpOcZDJ2YQuG5LOL8L0K0g44iw14hhV4UPHHWbicLjAeB7G7BDAT9/Aj9Xk+ot91sRhX8A2T8GKgw60VHMF2HMWOkgHiPNYnyF7s7wR4jCm5//cLAUvQh2vpGRX9F60VfEQMeRB+FQJGpWpf4w1GdwK8x3AMQ8BKIs5+wCuM6QS4mw01L3ngdkn2pKQFSW03c5uWdQIcSKbZgxPYVgg4kzyyMbUnBLKzE2AqHuJnoUzDYFdz0sqq2412Ktv/KZYnCT6qqGRONtrY7PatJUaLM62r4guO41B2dryPKmNVbMbgnDRmEK6PYdfKtP/lyGygVTVzeJd20b7U0rWYm12/FPH7P1G3ridml/Yids/nrK4bOIa3CB+E0WKdhwpDSeGJv9HEBycg1zEdsQ0W4mU/oQlA5AqThaKm5fmcbhoQ+cal9b4mfz8abVGtJ5tqUSWk64A/OxFWGSrrSC8AAAAASUVORK5CYII="/>
+            </div>
+
+        </div>
+        
+        <div class="head-right">
+
+            <div class="register-login">
+                <div class="register">Register</div>
+                <div class="login">Login</div>
+            </div>
+    
+            <div class="download-container">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAJNJREFUSEvtlbEJgDAQRV/mEASx0G1cxsYNdCEHsbETBfdQLK5JOHIpYpXUj/8vP+G+I/NxmfXRDAZgBnrjADswAqvPawY3UBnFBTuA1mrwJIoLHgys3UAMrG+k8sVAsi8RRT9tiahEFCbw27KLhu8Byds0m8EF1InqJ9BYC+erzAXojCYbMKVUplE3jlkbK66kEC/59yYZ6oqzowAAAABJRU5ErkJggg=="/>
+                <div class="download">Download App</div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="strip">
+        <div>EMI</div>
+        <div>Servicing</div>
+        <div>Room Partner</div>
+        <div>Payment</div>
+        <div>contact</div>
+    </div>
+
+
+    <div class="main">
+        
+        <div class="filter">
+            <div class="applied-container">
+                <div class="ap">
+                    <div class="applied">Applied Filters</div>
+                    <div class="clear">Clear All</div>
+                </div>
+                <div class="appartment">Residential Apartment<span style="margin-left: 0.5rem; font-weight: 400; font-size: larger; color: rgb(1, 189, 189);">  X</span></div>
+            </div>
+            <div class="seen border">
+                <div class="hide">Hide already seen</div>
+                <label class="toggle-container">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="budget-container border">
+                <div class="budget">Budget</div>
+            </div>
+            <div class="bedroom border">No. of Bedrooms</div>
+            <div class="property border">Type of Property</div>
+            <div class="available border">Availabe For</div>
+            <div class="posted border">Posted by</div>
+            <div class="furnished border">Furnished Status</div>
+            <div class="localities border">Localities</div>
+            <div class="photos-container border">
+                <div class="photos">Properties with Photos</div>
+                <label class="toggle-container">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="verified-container">
+                <div class="verified">Verified properties &reg;</div>
+                <label class="toggle-container">
+                    <input type="checkbox" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    
+
+        <div class="sub">
+
+            <div class="resluts-container">
+
+                <div class="results">25 Results | House for Rent in Chandigarh</div>
+    
+                <div class="below-result">
+
+                    <div class="tags">
+                        <div class="tag">Furnished<span style="margin-left: 0.5rem; font-weight: 400; font-size: larger; color: rgb(1, 189, 189);">  X</span></div>
+                        <div class="tag">With Photos<span style="margin-left: 0.5rem; font-weight: 400; font-size: larger; color: rgb(1, 189, 189);">  X</span></div>
+                        <div class="tag">verified<span style="margin-left: 0.5rem; font-weight: 400; font-size: larger; color: rgb(1, 189, 189);">  X</span></div>
+                        <div class="tag">Rental<span style="margin-left: 0.5rem; font-weight: 400; font-size: larger; color: rgb(1, 189, 189);">  X</span></div>
+                    </div>
+                    
+                    <div class="by">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAH1JREFUSEtjZKAxYKSx+QzD34IGaBDCaPQQ/Q8VwBkS+IIIZGg91IBGII3NErItQDYc5mpslpBlATbDcVlClgXI4UzIAELyBJMpIQMIyY9awDAaRASDgCZBREpGJDuZEluUkG0BKLcTUxhSZAHMEmQao4Ic/jUaxW0CmgcRACbHJhl9XB2VAAAAAElFTkSuQmCC"/>
+                        <div>Sort By</div>
+                        <select style="outline: none; border: none; width: 1.5rem; background-color: transparent; cursor: pointer;">
+                            <option value="" disabled selected></option>
+                            <option value="option1">Newest first</option>
+                            <option value="option2">Price LOw to High</option>
+                            <option value="option3">Price High to Low</option>
+                        </select>
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <div class="house">
+        
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/28134/16/562696681M-1737277869416.jpg" alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1    );" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/26717/17/534357449M-1732876361360.jpg    " alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1    );" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+                </div>
+        
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/28134/16/562696681M-1737277869416.jpg" alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1    );" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/28134/16/562696681M-1737277869416.jpg" alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1    );" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/28134/16/562696681M-1737277869416.jpg" alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1    );" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/28134/16/562696681M-1737277869416.jpg" alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1    );" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+
+                <div class="house1">
+        
+                    <img class="img1" src="https://imagecdn.99acres.com/media1/28134/16/562696681M-1737277869416.jpg" alt="">
+
+                    <div class="content">
+
+                        <div class="info">
+                            <div class="top">
+                                <div class="heading">New Friends enclave colony, Mohali</div>
+                                <div class="description">2 Bedroom House for rent in New Friends enclave colony, Mohali</div>
+                            </div>
+                            <div class="row">
+                                <div class="deposit">
+                                    <div class="money"><span style="font-weight: 800;">₹15,000</span> /month</div>
+                                    <div class="emi">Can be deposited by EMI</div>
+                                </div>
+                                <div class="BHK">
+                                    <div class="bhk">2 BHK</div>
+                                    <div class="bath">2 Baths</div>
+                                </div>
+                            </div>
+                            <div class="detail">
+                                <div>View all details &rarr;</div>
+                            </div>
+                        </div>
+
+                        <div class="bottom">
+                            <div class="ago">11hrs ago<br><strong>Owner</strong></div>
+                            <div class="contact-details">
+                                <div class="number">View Number</div>
+                                <div class="phone">
+                                    <img style="filter: invert(1);" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAYVJREFUSEvF1DFIVXEUx/HP20ShQHTQoS0KQQeRBrfAkogWp7bARSmxsUB0KYqGxmoMl4LaGgRxKsLFIQgcxCXBtUURJAy9/7gX/v15t/fufT08cJf/vef7u+d/zvk1dDkaXeY7F4Eg+hiX8RCHnVSZVnABHzCdQzdxHb/qiqQC3zGawD5hBr/riKQCpyWQt5j9HwJH6C0BLeFZVZG0gu2sByMlkDXc7lTgPe42gexgCvudCszjTQL5hhv4WRUevk+v6BL2EtBVhApqRbNNDmN5J6Kt4EktepMKAmcia+ZWBDzOz8IAxDGEl1jHatkPlHnRK9yPkn7gJnbzs0F8Qbi+EE+zRVxuJlIm0JNZxGdci5LCjjzHx/wZS4CvsYC/lvVfbjqQjeZXXKlw/+9wDydFTiu7vpj/bRjTdiNU8qBdgWKUF3ObKLORWPxFbvd/zlpVECeGxj5CWMa+knI2cCt23ioCBbMfc5jEOIbzF2EZw1AcxOJ1BNrtReUrqgSu0uRa4CLpDBORNRkbOkH4AAAAAElFTkSuQmCC"/>
+                                    <div class="contact">Contact</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>
