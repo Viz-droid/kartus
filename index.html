@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlobalX | Bootstrap</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+      .btn-custom {
+        border: 3px solid;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: inline-block;
+      }
+
+      .autoBlur {
+        animation: autoBlur both;
+        animation-timeline: view();
+      }
+
+      @keyframes autoBlur {
+        0% {
+          filter: blur(10px);
+        }
+
+        40%,
+        60% {
+          filter: blur(0px);
+        }
+
+        100% {
+          filter: blur(10px);
+        }
+      }
+
+      .slide {
+        animation: slide both;
+        animation-timeline: view();
+      }
+
+      @keyframes slide {
+        0% {
+          opacity: 0;
+          transform: translateY(200px) scale(0.3);
+          filter: blur(10px);
+        }
+
+        30%,
+        70% {
+          filter: blur(0);
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translateY(200px) scale(0.3);
+          filter: blur(10px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="py-3 border-bottom">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+          <h3 class="mb-0">THE GLOBAL GOALS</h3>
+        </div>
+        <nav class="d-flex gap-3 text-uppercase div fw-semibold">
+          <div>Home &gt;</div>
+          <div>The 17 Goals &gt;</div>
+          <div>Take Action &gt;</div>
+          <div>News &gt;</div>
+          <div>Resources &gt;</div>
+          <div>Partners &gt;</div>
+          <div>漢A</div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="mt-5 py-5">
+      <div class="container">
+        <h1 class="display-5 fw-semibold w-75 mb-4">
+          FROM TIKTOK TO POLICY CHANGE:<br />HOW GEN Z IS DISRUPTING CLIMATE
+          ACTION
+        </h1>
+        <img
+          src="https://cdn.pixabay.com/photo/2021/10/06/10/53/children-6685385_1280.jpg"
+          alt="Gen Z Climate Action"
+          class="autoBlur slide img-fluid rounded-5 shadow-sm"
+        />
+      </div>
+    </section>
+
+    <!-- Global Goals Introduction -->
+    <main>
+      <section class="py-5">
+        <div class="container w-75">
+          <h2 class="autoBlur slide mb-3">
+            In 2015, world leaders agreed to 17 Global Goals.
+          </h2>
+          <p class="autoBlur slide fs-5">
+            We’re beyond the halfway mark to achieving the Sustainable
+            Development Goals (SDGs) by 2030, and only 17% of them are on track.
+            COVID-19, the cost of living, conflict, the climate crisis – such as
+            floods, heatwaves, wildfires – have set us back, but hope remains.
+            Find out how you get involved and explore more about each of the
+            Global Goals below.
+          </p>
+          <div class="mt-4">
+            <span class="autoBlur slide btn-custom">START NOW</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Financial System Section -->
+      <section class="py-5">
+        <div class="container">
+          <div class="row g-5">
+            <div class="col-md-6">
+              <h2 class="autoBlur slide">
+                The global financial system needs an upgrade.
+              </h2>
+              <p class="autoBlur slide fs-5">
+                Read the #DearG20 open letter, signed by over 100 former
+                leaders, activists, academics and artists calling on #G20
+                Leaders to: Triple investment in our future. Eradicate crippling
+                debt that shackles development. Make polluters pay for a cleaner
+                planet.
+              </p>
+              <div class="mt-4">
+                <span class="autoBlur slide btn-custom">READ NOW</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <img
+                src="https://cdn.pixabay.com/photo/2016/03/27/19/19/boys-1283786_640.jpg"
+                alt="Boys Learning"
+                class="autoBlur slide img-fluid rounded-5 shadow-sm"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Take Action Section -->
+      <section class="py-5">
+        <div class="container">
+          <div class="row g-5">
+            <div class="col-md-6">
+              <img
+                src="https://cdn.pixabay.com/photo/2022/08/21/03/48/smile-7400381_640.jpg"
+                alt="Smiling Girl"
+                class="autoBlur slide img-fluid rounded-5 shadow-sm"
+              />
+            </div>
+            <div class="col-md-6">
+              <h2 class="autoBlur slide">What can you do?</h2>
+              <p class="autoBlur slide fs-5">
+                Every positive action you take, no matter how div, has the power
+                to make a difference. Supporting a clean the oceans campaign,
+                switching to greener products, standing up for justice, and
+                reminding your leaders of the promise of the Global Goals are
+                all good places to start.
+              </p>
+              <div class="mt-4">
+                <span class="autoBlur slide btn-custom">TAKE ACTION</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- School & Business Section -->
+      <section class="py-5">
+        <div class="container">
+          <div class="row text-center mb-4">
+            <div class="autoBlur slide col"><h2>SCHOOL</h2></div>
+            <div class="autoBlur slide col"><h2>BUSINESS</h2></div>
+          </div>
+          <div class="row mb-4">
+            <div class="col fs-5">
+              <p class="autoBlur slide">
+                Discover the World’s Largest Lesson, an educational platform
+                which promotes the use of the Goals in learning. There are
+                thought-provoking lesson plans and activities and resources for
+                teachers/children to use, all designed to motivate and inspire
+                young people to become informed and active citizens, and build
+                the world they want to grow up in.
+              </p>
+            </div>
+            <div class="col fs-5">
+              <p class="autoBlur slide">
+                Whether you’re a business or employee, at the start of your
+                sustainability journey or developing your next set of
+                commitments, we’ve got useful resources to support your
+                contribution to the Global Goals.
+              </p>
+            </div>
+          </div>
+          <div class="row gap-4 justify-content-center">
+            <div class="col-auto">
+              <span class="autoBlur slide btn-custom">START LEARNING</span>
+            </div>
+            <div class="col-auto">
+              <span class="autoBlur slide btn-custom">START PLANNING</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- What's Happening Section -->
+      <section class="py-5">
+        <div class="container">
+          <img
+            src="https://cdn.pixabay.com/photo/2013/01/05/20/05/rascals-74008_1280.jpg"
+            alt="Rascals Playing"
+            class="autoBlur slide img-fluid rounded-5 shadow-sm mb-5"
+          />
+          <h2 class="autoBlur slide text-center fw-semibold mb-5">
+            WHAT'S HAPPENING
+          </h2>
+
+          <div class="row g-5">
+            <!-- Card 1 -->
+            <div class="col-md-4">
+              <img
+                src="https://cdn.pixabay.com/photo/2022/01/14/03/50/asian-kids-6936401_640.jpg"
+                alt="Gaming for Goals"
+                class="autoBlur slide img-fluid rounded-5 shadow-sm mb-3"
+              />
+              <div class="autoBlur slide small">April 03, 2025</div>
+              <h5 class="autoBlur slide mt-2">GAMING FOR THE GOALS</h5>
+              <p class="autoBlur slide fs-6">
+                Education in an unstable world. We live in turbulent times, and
+                no one is feeling this more than the future generation...
+              </p>
+              <div class="autoBlur slide border-top pt-2 fw-semibold">
+                READ MORE
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-4">
+              <img
+                src="https://cdn.pixabay.com/photo/2016/12/03/14/20/children-1879906_640.jpg"
+                alt="Clinic Empowerment"
+                class="autoBlur slide img-fluid rounded-5 shadow-sm mb-3"
+              />
+              <div class="autoBlur slide small">April 07, 2025</div>
+              <h5 class="autoBlur slide mt-2">
+                Empowering Mothers and Newborns
+              </h5>
+              <p class="autoBlur slide fs-6">
+                It’s not just about having a clinic nearby; it’s about having
+                skilled professionals, the right equipment and medicines...
+              </p>
+              <div class="autoBlur slide border-top pt-2 fw-semibold">
+                READ MORE
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-4">
+              <img
+                src="https://cdn.pixabay.com/photo/2022/07/31/21/27/little-boy-7356918_640.jpg"
+                alt="The Price of Progress"
+                class="autoBlur slide img-fluid rounded-5 shadow-sm mb-3"
+              />
+              <div class="autoBlur slide small">February 28, 2025</div>
+              <h5 class="autoBlur slide mt-2">The Price of Progress</h5>
+              <p class="autoBlur slide fs-6">
+                In 2015, world leaders pledged to end poverty and create a
+                fairer world. These promises became the SDGs...
+              </p>
+              <div class="autoBlur slide border-top pt-2 fw-semibold">
+                READ MORE
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-5">
+            <span class="autoBlur slide btn-custom">SEE MORE</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Newsletter -->
+    <section class="bg-dark text-white py-5">
+      <div class="container text-center">
+        <h2 class="autoBlur slide fw-semibold mb-3">STAY UPDATED</h2>
+        <p class="autoBlur slide fs-5">
+          Sign up to our newsletter to hear about global ideas and campaigns
+          driving progress toward the Global Goals.
+        </p>
+
+        <div class="row justify-content-center align-items-end g-3 mb-3">
+          <div class="col-md-3">
+            <input
+              type="text"
+              class="autoBlur slide form-control p-2 fs-5"
+              placeholder="First name"
+            />
+          </div>
+          <div class="col-md-3">
+            <input
+              type="text"
+              class="autoBlur slide form-control p-2 fs-5"
+              placeholder="Last name"
+            />
+          </div>
+          <div class="col-md-3">
+            <input
+              type="email"
+              class="autoBlur slide form-control p-2 fs-5"
+              placeholder="Email"
+            />
+          </div>
+          <div class="col-auto">
+            <span class="autoBlur slide btn-custom text-white">JOIN</span>
+          </div>
+        </div>
+
+        <div class="autoBlur slide">
+          By submitting the form you agree to The Global Goals
+          <a href="#" class="text-white text-decoration-underline"
+            >Terms & Conditions</a
+          >
+          and
+          <a href="#" class="text-white text-decoration-underline"
+            >Privacy Policy</a
+          >.
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-dark py-5">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-md-3">
+            <img
+              src="https://www.globalgoals.org/static/images/logo-eba30efeb6af50ec06b4590bac56770b.svg"
+              alt="Global Goals"
+              class="img-fluid"
+            />
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-semibold mb-3">NAVIGATION</h6>
+            <ul class="list-unstyled">
+              <li>Home</li>
+              <li>The 17 Goals</li>
+              <li>Take Action</li>
+              <li>News</li>
+              <li>Resources</li>
+              <li>Partners</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-semibold mb-3">SHORTCUTS</h6>
+            <ul class="list-unstyled">
+              <li>School</li>
+              <li>Business</li>
+              <li>Press</li>
+              <li>Project Everyone</li>
+              <li>Contact Us</li>
+              <li>Podcast</li>
+              <li>Campaigns</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <img
+              src="https://www.globalgoals.org/static/images/project-everyone-a915b417ffd934233316b9ac0b3fba32.svg"
+              alt="Project Everyone"
+              class="img-fluid"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="container d-flex justify-content-between align-items-center border-top pt-4 mt-4"
+      >
+        <div class="d-flex gap-4">
+          <div>Terms & Conditions</div>
+          <div>Privacy Policy</div>
+          <div>Cookies</div>
+          <div>Anti-Corruption</div>
+          <div>Asset Licence</div>
+        </div>
+        <div>
+          <div>© 2025 Global Goals</div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
