@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <title>Bipscore</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* --- Variables --- */
+      --primary: #4f46e5;
+      --primary-glow: rgba(79, 70, 229, 0.3);
+      --red-line: #ef4444;
+      
+      /* Light Theme Defaults */
+      --bg-body: #f3f4f6;
+      --bg-blob-1: #e0e7ff;
+      --bg-blob-2: #fae8ff;
+      --glass-bg: rgba(255, 255, 255, 0.8);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --text-main: #0f172a;       /* Dark Navy for sharp contrast */
+      --text-subtle: #475569;     /* Dark Grey */
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;    /* Visible Grid Lines */
+      --input-bg: #f8fafc;
+      --hover-bg: #f1f5f9;
+
+      /* Badges */
+      --badge-theory: rgba(79, 70, 229, 0.1); --badge-theory-text: #4338ca;
+      --badge-prac: rgba(16, 185, 129, 0.1); --badge-prac-text: #047857;
+      --badge-mixed: rgba(245, 158, 11, 0.1); --badge-mixed-text: #b45309;
+    }
+
+    [data-theme="dark"] {
+      --primary: #818cf8;
+      --primary-glow: rgba(129, 140, 248, 0.2);
+      
+      /* High Contrast Dark Theme */
+      --bg-body: #020617;         /* Almost Black */
+      --bg-blob-1: #172554;
+      --bg-blob-2: #312e81;
+      --glass-bg: rgba(15, 23, 42, 0.85); 
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --text-main: #ffffff;       /* Pure White */
+      --text-subtle: #e2e8f0;     /* Very Light Grey */
+      --card-bg: #1e293b;
+      --border-color: #475569;    /* Lighter border for visibility in dark */
+      --input-bg: #0f172a;
+      --hover-bg: #334155;
+
+      /* Dark Badge Adjustments */
+      --badge-theory: rgba(99, 102, 241, 0.2); --badge-theory-text: #e0e7ff;
+      --badge-prac: rgba(16, 185, 129, 0.2); --badge-prac-text: #d1fae5;
+      --badge-mixed: rgba(245, 158, 11, 0.2); --badge-mixed-text: #fef3c7;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      padding-top: 80px; 
+      padding-bottom: 100px;
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+    }
+
+    /* --- Typography Fixes --- */
+    h1, h2, h3, h4, h5, h6 { color: var(--text-main); font-weight: 700; }
+    .text-muted { color: var(--text-subtle) !important; }
+    
+    /* --- Animated Background Blobs --- */
+    .blob-cont {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1; overflow: hidden; pointer-events: none;
+    }
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); opacity: 0.5;
+      animation: float 20s infinite alternate;
+    }
+    .blob-1 { width: 50vw; height: 50vw; top: -10%; left: -10%; background: var(--bg-blob-1); }
+    .blob-2 { width: 40vw; height: 40vw; bottom: -10%; right: -10%; background: var(--bg-blob-2); animation-delay: -10s; }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 40px) scale(1.05); }
+    }
+
+    /* --- Cards --- */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px; /* Slightly boxier per preference */
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      height: 100%;
+      position: relative;
+    }
+
+    /* --- Timetable Grid (The Request) --- */
+    .timetable-wrapper { position: relative; overflow-x: auto; }
+    
+    /* Ensure table borders are visible */
+    .table-custom {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .table-custom th, .table-custom td {
+      border: 1px solid var(--border-color); /* Simple Grid */
+      padding: 10px;
+      vertical-align: middle;
+    }
+    
+    .lecture-cell {
+      border-radius: 0; /* REMOVED radius per request */
+      font-size: 0.9rem;
+      cursor: pointer; 
+      transition: background 0.15s;
+      position: relative; /* Context for the note dot */
+      height: 60px; /* Uniform height */
+    }
+    .lecture-cell:hover {
+      background: var(--hover-bg);
+    }
+    
+    /* BLUE DOT - TOP LEFT */
+    .lecture-cell.has-note::after {
+      content: '';
+      position: absolute;
+      top: 5px;   /* Top */
+      left: 5px;  /* Left */
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 4px var(--primary);
+    }
+
+    /* --- Red Line --- */
+    .red-line-container {
+      position: absolute; top: 0; bottom: 0; left: 0; right: 0; 
+      pointer-events: none; z-index: 50; display: none;
+    }
+    .red-line-marker {
+      position: absolute; width: 2px; height: 100%;
+      background: var(--red-line); box-shadow: 0 0 10px var(--red-line);
+    }
+    .red-line-marker::after {
+      content: 'NOW'; position: absolute; top: -20px; left: 50%;
+      transform: translateX(-50%); background: var(--red-line); color: #fff;
+      font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: 800;
+    }
+
+    /* --- Theme Toggle & Inputs --- */
+    .theme-toggle {
+      width: 40px; height: 40px; border-radius: 8px; /* Boxier */
+      background: var(--input-bg); border: 1px solid var(--border-color);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
+    .form-control {
+      background-color: var(--input-bg); border: 1px solid var(--border-color);
+      color: var(--text-main); border-radius: 8px;
+    }
+    .form-control::placeholder { color: var(--text-subtle); opacity: 0.7; }
+    .form-control:focus {
+      background-color: var(--input-bg); color: var(--text-main);
+      border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    /* --- Mobile Nav --- */
+    .mobile-nav {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 400px; background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color); border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      display: flex; justify-content: space-evenly; padding: 12px 0; z-index: 1000;
+    }
+    .nav-item-btn {
+      background: none; border: none; color: var(--text-subtle);
+      font-size: 0.7rem; font-weight: 600; display: flex; flex-direction: column; align-items: center;
+    }
+    .nav-item-btn.active { color: var(--primary); transform: translateY(-2px); }
+    .nav-item-btn i { font-size: 1.4rem; margin-bottom: 2px; }
+
+    /* --- Tab System (Mobile) --- */
+    .tab-section { display: none; }
+    .tab-section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* =========================================
+       DESKTOP LAYOUT (Bento Grid)
+       ========================================= */
+    @media (min-width: 992px) {
+      body {
+        padding-top: 20px; padding-bottom: 20px;
+        display: flex; justify-content: center;
+      }
+      .container { max-width: 1400px; margin: 0 auto; }
+      
+      .top-navbar, .mobile-nav { display: none !important; }
+
+      .desktop-wrapper {
+        display: grid;
+        grid-template-columns: 260px 1fr 300px; /* Sidebar | Main | Widgets */
+        gap: 24px;
+        height: calc(100vh - 40px);
+      }
+
+      /* Sidebar */
+      .sidebar-glass {
+        grid-column: 1 / 2; 
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 1.5rem;
+        display: flex; flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* Nav Links */
+      .desktop-nav-link {
+        display: flex; align-items: center; padding: 12px 16px;
+        color: var(--text-subtle); text-decoration: none;
+        font-weight: 600; border-radius: 12px; margin-bottom: 5px;
+        transition: all 0.2s;
+      }
+      .desktop-nav-link:hover, .desktop-nav-link.active {
+        background: var(--primary); color: #fff;
+      }
+      .desktop-nav-link i { margin-right: 12px; font-size: 1.1rem; }
+
+      /* Main Content */
+      .main-content {
+        grid-column: 2 / 3; 
+        display: flex; flex-direction: column; gap: 20px;
+        overflow-y: auto; padding-right: 5px;
+      }
+      .main-content::-webkit-scrollbar { width: 6px; }
+      .main-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+      /* Hero Schedule */
+      .hero-schedule {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 2rem;
+        min-height: 500px;
+      }
+
+      /* Widgets */
+      .widget-col {
+        grid-column: 3 / 4; 
+        display: flex; flex-direction: column; gap: 20px;
+        overflow-y: auto;
+      }
+
+      /* Desktop Visibility Helpers */
+      .d-mobile-only { display: none !important; }
+      .d-desktop-only { display: block !important; }
+
+      /* Internal layout fixes */
+      .tab-section { display: block !important; }
+      #tab-timetable, #tab-courses, #tab-faculty, #tab-todo { display: contents !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="blob-cont">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+</div>
+
+<nav class="navbar fixed-top top-navbar d-lg-none" style="background: var(--glass-bg); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px);">
+  <div class="container d-flex justify-content-between align-items-center">
+    <span class="fw-bold" id="headerDateMobile"></span>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <i class="bi bi-moon-stars-fill" id="themeIconMobile"></i>
+    </button>
+  </div>
+</nav>
+
+<main class="container">
+  
+  <div class="desktop-wrapper d-none d-lg-grid">
+    
+    <aside class="sidebar-glass">
+      <div>
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--border-color)!important;">
+          <div class="d-flex align-items-center">
+            <div class="bg-primary rounded d-flex align-items-center justify-content-center text-white me-2" style="width:32px; height:32px;">
+              <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <h6 class="m-0 fw-bold">Bipscore</h6>
+          </div>
+          <button class="theme-toggle" style="width:32px; height:32px;" onclick="toggleTheme()" title="Toggle Theme">
+            <i class="bi bi-moon-stars-fill" id="themeIconDesktop" style="font-size: 0.9rem;"></i>
+          </button>
+        </div>
+
+        <nav>
+          <a href="#" class="desktop-nav-link active"><i class="bi bi-calendar-week"></i> Schedule</a>
+          <a href="#" class="desktop-nav-link"><i class="bi bi-check2-square"></i> Tasks</a>
+          <a href="#" class="desktop-nav-link"><i class="bi bi-book"></i> Courses</a>
+          <a href="#" class="desktop-nav-link"><i class="bi bi-people"></i> Faculty</a>
+        </nav>
+      </div>
+
+      <div class="p-3 rounded" style="background: var(--input-bg); border: 1px solid var(--border-color);">
+        <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.65rem;">Today</small>
+        <div class="fw-bold" id="headerDateDesktop"></div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      
+      <div class="d-flex justify-content-between align-items-end">
+        <div>
+          <h2 class="fw-bold mb-1">Dashboard</h2>
+          <p class="text-muted m-0">Welcome back. Stay organized.</p>
+        </div>
+        <div class="shadow-sm p-3 rounded-4 text-white" style="background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%); min-width: 250px;">
+           <small class="text-white-50 text-uppercase fw-bold" style="font-size: 0.65rem;">Up Next</small>
+           <h5 class="fw-bold mt-1 mb-0" id="nextClassSubject">Loading...</h5>
+           <div class="d-flex align-items-center mt-1">
+             <i class="bi bi-clock me-2 text-white-50"></i> <span id="nextClassTime" class="small">--:--</span>
+           </div>
+        </div>
+      </div>
+
+      <div class="hero-schedule">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold m-0">Timetable</h5>
+          <div class="d-flex align-items-center bg-body rounded border px-2 py-1" style="border-color: var(--border-color)!important;">
+             <button class="btn btn-sm text-muted" onclick="changeWeek(-1)">❮</button>
+             <span class="mx-3 fw-bold font-monospace small" id="weekRangeDisplayDesktop">...</span>
+             <button class="btn btn-sm text-muted" onclick="changeWeek(1)">❯</button>
+          </div>
+        </div>
+        
+        <div class="timetable-wrapper">
+          <div class="red-line-container" id="redLineContainerDesktop">
+            <div class="red-line-marker" id="redLineDesktop"></div>
+          </div>
+          <table class="table-custom text-center" id="desktopTable">
+            <thead>
+              <tr style="background: var(--input-bg);">
+                <th style="width: 100px;">Day</th>
+                <th>09:30</th><th>10:20</th><th>11:20</th><th>12:10</th><th>01:55</th><th>02:45</th><th>03:35</th>
+              </tr>
+            </thead>
+            <tbody id="timetableBodyDesktop"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h5 class="fw-bold mb-3 ms-1">Courses</h5>
+        <div class="row g-3" id="coursesGridDesktop"></div>
+      </div>
+      
+    </div>
+
+    <div class="widget-col">
+      <div class="glass-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="fw-bold m-0">Tasks</h6>
+          <span class="badge bg-primary rounded-pill" id="todoCountDesktop">0</span>
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" id="todoInputDesktop" class="form-control form-control-sm border-end-0" placeholder="New task...">
+          <button class="btn btn-primary btn-sm" onclick="addTodo('Desktop')"><i class="bi bi-plus"></i></button>
+        </div>
+        <div id="todoListDesktop" style="max-height: 250px; overflow-y: auto;"></div>
+      </div>
+      
+      <div class="glass-card">
+        <h6 class="fw-bold mb-3">Faculty</h6>
+        <div class="d-flex flex-column gap-2" id="facultyListDesktop"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="d-lg-none mt-4">
+    
+    <div id="tab-timetable" class="tab-section active">
+      <div class="glass-card mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold m-0">Schedule</h5>
+          <div class="d-flex align-items-center bg-body rounded border px-2 py-1" style="border-color: var(--border-color)!important;">
+            <button class="btn btn-sm text-muted" onclick="changeWeek(-1)">❮</button>
+            <span class="mx-2 small fw-bold" id="weekRangeDisplayMobile">...</span>
+            <button class="btn btn-sm text-muted" onclick="changeWeek(1)">❯</button>
+          </div>
+        </div>
+        <div class="timetable-wrapper">
+          <div class="red-line-container" id="redLineContainerMobile">
+            <div class="red-line-marker" id="redLineMobile"></div>
+          </div>
+          <table class="table-custom text-center">
+            <thead>
+              <tr style="background: var(--input-bg);">
+                <th class="sticky-start">Day</th>
+                <th>09:30</th><th>10:20</th><th>11:20</th><th>12:10</th><th>01:55</th><th>02:45</th><th>03:35</th>
+              </tr>
+            </thead>
+            <tbody id="timetableBodyMobile"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-todo" class="tab-section">
+      <div class="glass-card mb-4">
+        <h5 class="fw-bold mb-3">Tasks</h5>
+        <div class="input-group mb-3">
+          <input type="text" id="todoInputMobile" class="form-control border-end-0" placeholder="Add task...">
+          <button class="btn btn-primary" onclick="addTodo('Mobile')"><i class="bi bi-plus-lg"></i></button>
+        </div>
+        <div id="todoListMobile"></div>
+      </div>
+    </div>
+
+    <div id="tab-courses" class="tab-section">
+      <div class="glass-card mb-4">
+        <h5 class="fw-bold mb-3">Courses</h5>
+        <div id="coursesListMobile"></div>
+      </div>
+    </div>
+
+    <div id="tab-faculty" class="tab-section">
+      <div class="glass-card mb-4">
+        <h5 class="fw-bold mb-3">Faculty</h5>
+        <div class="row g-3" id="facultyListMobile"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div class="modal fade" id="noteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color);">
+      <div class="modal-header border-bottom-0">
+        <h6 class="modal-title fw-bold" id="noteModalTitle"></h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(var(--invert-val, 0));"></button>
+      </div>
+      <div class="modal-body">
+        <textarea id="noteInput" class="form-control shadow-none" rows="5" placeholder="Write your note here..."></textarea>
+      </div>
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-sm btn-primary" onclick="saveNote()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="mobile-nav d-lg-none">
+  <button class="nav-item-btn active" onclick="switchTab('timetable', this)"><i class="bi bi-calendar4-week"></i> Schedule</button>
+  <button class="nav-item-btn" onclick="switchTab('todo', this)"><i class="bi bi-check2-circle"></i> Tasks</button>
+  <button class="nav-item-btn" onclick="switchTab('courses', this)"><i class="bi bi-journal-bookmark"></i> Courses</button>
+  <button class="nav-item-btn" onclick="switchTab('faculty', this)"><i class="bi bi-person-vcard"></i> Faculty</button>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* --- DATA --- */
+  const scheduleMaster = {
+    "Monday": ["Aptitude-II", "Aptitude-II", "OOP (Java)", "OS", "DAA", "—", "Software Eng"],
+    "Tuesday": ["OS", "OOP (Java)", "OOP Lab", "OOP Lab", "DAA", "CCI-I Lab", "CCI-I Lab"],
+    "Wednesday": ["DAA Lab", "DAA Lab", "Soft Skills", "Soft Skills", "Software Eng", "—", "Mini Proj"],
+    "Thursday": ["Intro ML", "OS", "FSD-I Lab", "FSD-I Lab", "DAA", "Aptitude-II", "Aptitude-II"],
+    "Friday": ["FSD-I Lab", "FSD-I Lab", "—", "—", "Software Eng", "Soft Skills", "Soft Skills"]
+  };
+  const slotTimes = [
+    { start: "09:30", end: "10:20" }, { start: "10:20", end: "11:10" },
+    { start: "11:20", end: "12:10" }, { start: "12:10", end: "13:00" },
+    { start: "13:55", end: "14:45" }, { start: "14:45", end: "15:35" },
+    { start: "15:35", end: "16:25" }
+  ];
+  const coursesData = [
+    { code: "24CST-205", name: "Operating Systems", type: "Theory", cr: 3 },
+    { code: "24CST-208", name: "Software Engineering", type: "Theory", cr: 3 },
+    { code: "24CST-211", name: "Intro to Machine Learning", type: "Theory", cr: 3 },
+    { code: "24CSH-206", name: "Design & Analysis of Algo", type: "Theory / Practical", cr: 4 },
+    { code: "24CSH-207", name: "OOP using Java", type: "Theory / Practical", cr: 3 },
+    { code: "24CSP-209", name: "Competitive Coding – I", type: "Practical", cr: 1 },
+    { code: "24CSP-210", name: "Full Stack Development – I", type: "Practical", cr: 2 },
+    { code: "24CSR-208", name: "Semester Mini Project", type: "Practical", cr: 0 },
+    { code: "24TDP-291", name: "Soft Skills – II", type: "Practical", cr: 2 },
+    { code: "24TDT-292", name: "Aptitude – II", type: "Practical", cr: 4 }
+  ];
+  const facultyData = [
+    { name: "Dinesh Singh", id: "E18128", sub: "DAA" },
+    { name: "Navdeep Singh", id: "E7551", sub: "OOP (Java)" },
+    { name: "Manish Sharma", id: "E5593", sub: "OOP (Java)" },
+    { name: "Gurpreet Singh", id: "E7759", sub: "CCI-I" },
+    { name: "Navneet", id: "E14843", sub: "FSD-I" },
+    { name: "Komalpreet Saini", id: "E14279", sub: "OS" },
+    { name: "Gurpreet Singh", id: "E7759", sub: "SE" },
+    { name: "Satish Kumar", id: "E19696", sub: "ML" },
+    { name: "Deepika Khatri", id: "E15511", sub: "Soft Skills" },
+    { name: "Sunil Sangwan", id: "E16554", sub: "Aptitude" },
+    { name: "Not Assigned", id: "—", sub: "Mini Proj" }
+  ];
+
+  let currentDateOffset = 0;
+  let activeNoteKey = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    renderDateHeader();
+    renderTimetable();
+    renderTodos();
+    renderStaticData();
+    updateRedLine();
+    updateNextClassWidget();
+    setInterval(() => { updateRedLine(); updateNextClassWidget(); }, 60000);
+  });
+
+  /* --- TIMETABLE LOGIC --- */
+  function getStartOfWeek(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  }
+  function changeWeek(direction) {
+    currentDateOffset += direction;
+    renderTimetable();
+  }
+  function renderTimetable() {
+    const containers = [
+      { body: 'timetableBodyMobile', range: 'weekRangeDisplayMobile' },
+      { body: 'timetableBodyDesktop', range: 'weekRangeDisplayDesktop' }
+    ];
+    const today = new Date();
+    const baseDate = new Date();
+    baseDate.setDate(baseDate.getDate() + (currentDateOffset * 7));
+    const startOfWeek = getStartOfWeek(baseDate);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(endOfWeek.getDate() + 4);
+
+    const rangeText = `${startOfWeek.toLocaleDateString('en-GB',{month:'short',day:'numeric'})} - ${endOfWeek.toLocaleDateString('en-GB',{month:'short',day:'numeric'})}`;
+
+    containers.forEach(cont => {
+      const tbody = document.getElementById(cont.body);
+      if(!tbody) return;
+      document.getElementById(cont.range).textContent = rangeText;
+      tbody.innerHTML = "";
+
+      const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+      days.forEach((dayName, index) => {
+        const rowDate = new Date(startOfWeek);
+        rowDate.setDate(startOfWeek.getDate() + index);
+        const dateString = rowDate.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit' });
+        const isoDate = rowDate.toISOString().split('T')[0];
+        const isToday = rowDate.toDateString() === today.toDateString();
+        
+        let rowHtml = `<tr style="${isToday ? 'background: var(--input-bg)' : ''}">
+          <th class="text-start" style="border: 1px solid var(--border-color);">
+             <div class="fw-bold ${isToday?'text-primary':''}">${dayName}</div>
+             <div class="small text-muted fw-normal">${rowDate.getDate()}/${rowDate.getMonth()+1}</div>
+          </th>`;
+
+        scheduleMaster[dayName].forEach((sub, slotIndex) => {
+          const uniqueKey = `${isoDate}-slot${slotIndex}`;
+          const note = localStorage.getItem(uniqueKey);
+          // BLUE DOT LOGIC handled by CSS class 'has-note'
+          const hasNoteClass = note ? 'has-note' : '';
+          const isMuted = sub === "—" ? "text-muted" : "fw-medium";
+          
+          rowHtml += `<td class="lecture-cell ${hasNoteClass}" onclick="openNoteModal('${uniqueKey}', '${sub}', '${dateString}')">
+            <span class="${isMuted}">${sub}</span>
+          </td>`;
+        });
+        rowHtml += `</tr>`;
+        tbody.innerHTML += rowHtml;
+      });
+    });
+  }
+
+  /* --- WIDGETS --- */
+  function updateRedLine() {
+    const startTime = 9 * 60 + 30; // 09:30
+    const endTime = 16 * 60 + 25;  // 16:25
+    const totalDuration = endTime - startTime;
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const isWeekday = now.getDay() >= 1 && now.getDay() <= 5;
+    const viewingCurrentWeek = currentDateOffset === 0;
+
+    const ids = ['redLineContainerMobile', 'redLineContainerDesktop'];
+    const lines = ['redLineMobile', 'redLineDesktop'];
+
+    if (viewingCurrentWeek && isWeekday && currentMinutes >= startTime && currentMinutes <= endTime) {
+      const elapsed = currentMinutes - startTime;
+      const percentage = (elapsed / totalDuration) * 100;
+      // Simple logic: First col is roughly 12-14%. 
+      const finalLeft = 14 + ((percentage / 100) * 86); 
+
+      ids.forEach((id, idx) => {
+        document.getElementById(id).style.display = 'block';
+        document.getElementById(lines[idx]).style.left = `${finalLeft}%`;
+      });
+    } else {
+      ids.forEach(id => document.getElementById(id).style.display = 'none');
+    }
+  }
+
+  function updateNextClassWidget() {
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const now = new Date();
+    const dayName = dayNames[now.getDay()];
+    const currentMins = now.getHours() * 60 + now.getMinutes();
+    let nextSubject = "No More Classes";
+    let nextTime = "Relax";
+
+    if (scheduleMaster[dayName]) {
+      const subjects = scheduleMaster[dayName];
+      for (let i = 0; i < slotTimes.length; i++) {
+        const parts = slotTimes[i].start.split(':');
+        const slotStart = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        if (slotStart > currentMins) {
+          if (subjects[i] && subjects[i] !== "—") {
+            nextSubject = subjects[i];
+            nextTime = slotTimes[i].start;
+            break;
+          }
+        }
+      }
+    } else {
+      nextSubject = "Weekend";
+      nextTime = "Enjoy";
+    }
+    document.getElementById('nextClassSubject').textContent = nextSubject;
+    document.getElementById('nextClassTime').textContent = nextTime;
+  }
+
+  /* --- NOTES --- */
+  const noteModal = new bootstrap.Modal(document.getElementById('noteModal'));
+  function openNoteModal(key, sub, date) {
+    if(sub === "—") return;
+    activeNoteKey = key;
+    document.getElementById('noteModalTitle').innerText = `${sub} (${date})`;
+    document.getElementById('noteInput').value = localStorage.getItem(key) || "";
+    noteModal.show();
+  }
+  function saveNote() {
+    const val = document.getElementById('noteInput').value.trim();
+    if(!val) localStorage.removeItem(activeNoteKey);
+    else localStorage.setItem(activeNoteKey, val);
+    noteModal.hide();
+    renderTimetable();
+  }
+
+  /* --- TODO --- */
+  function getTodos() { return JSON.parse(localStorage.getItem('studentTodos')) || []; }
+  function renderTodos() {
+    const todos = getTodos();
+    document.getElementById('todoCountDesktop').textContent = todos.filter(t => !t.completed).length;
+    ['todoListMobile', 'todoListDesktop'].forEach(listId => {
+      const list = document.getElementById(listId);
+      list.innerHTML = "";
+      if(todos.length === 0) {
+        list.innerHTML = `<div class="text-center text-muted py-3 small">No tasks yet</div>`;
+      } else {
+        todos.forEach((todo, idx) => {
+          list.innerHTML += `
+            <div class="d-flex align-items-center bg-body p-2 rounded mb-2 border ${todo.completed?'opacity-50':''}" style="border-color: var(--border-color)!important;">
+              <input class="form-check-input me-2" type="checkbox" ${todo.completed?'checked':''} onchange="toggleTodo(${idx})">
+              <span class="flex-grow-1 small ${todo.completed?'text-decoration-line-through':''}">${todo.text}</span>
+              <button class="btn btn-sm text-danger p-0" onclick="deleteTodo(${idx})"><i class="bi bi-x"></i></button>
+            </div>`;
+        });
+      }
+    });
+  }
+  function addTodo(source) {
+    const input = document.getElementById(source === 'Mobile' ? 'todoInputMobile' : 'todoInputDesktop');
+    if(!input.value.trim()) return;
+    const todos = getTodos();
+    todos.push({ text: input.value.trim(), completed: false });
+    localStorage.setItem('studentTodos', JSON.stringify(todos));
+    input.value = "";
+    renderTodos();
+  }
+  function toggleTodo(idx) {
+    const todos = getTodos();
+    todos[idx].completed = !todos[idx].completed;
+    localStorage.setItem('studentTodos', JSON.stringify(todos));
+    renderTodos();
+  }
+  function deleteTodo(idx) {
+    const todos = getTodos();
+    todos.splice(idx, 1);
+    localStorage.setItem('studentTodos', JSON.stringify(todos));
+    renderTodos();
+  }
+
+  /* --- STATIC DATA --- */
+  function renderStaticData() {
+    const cListD = document.getElementById('coursesGridDesktop');
+    const cListM = document.getElementById('coursesListMobile');
+    
+    coursesData.forEach(c => {
+      // Desktop Grid
+      cListD.innerHTML += `
+        <div class="col-md-4">
+          <div class="glass-card p-3 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="badge" style="background:var(--primary-glow); color:var(--primary);">${c.type}</span>
+              <small class="fw-bold">${c.cr} Cr</small>
+            </div>
+            <h6 class="fw-bold">${c.name}</h6>
+            <div class="small text-muted border-top pt-2 mt-2 font-monospace" style="border-color: var(--border-color)!important">${c.code}</div>
+          </div>
+        </div>`;
+      
+      // Mobile List
+      cListM.innerHTML += `
+        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2" style="border-color: var(--border-color)!important">
+           <div><div class="fw-bold">${c.name}</div><div class="small text-muted font-monospace">${c.code}</div></div>
+           <div class="text-end"><span class="badge bg-light text-dark border">${c.type}</span><div class="small fw-bold mt-1">${c.cr} Cr</div></div>
+        </div>`;
+    });
+
+    const fListD = document.getElementById('facultyListDesktop');
+    const fListM = document.getElementById('facultyListMobile');
+    
+    facultyData.forEach(f => {
+      // Desktop List
+      fListD.innerHTML += `
+        <div class="d-flex align-items-center p-2 rounded" style="background: var(--input-bg);">
+          <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:32px; height:32px; font-size:0.8rem;">${f.name.charAt(0)}</div>
+          <div><div class="fw-bold small">${f.name}</div><div class="small text-muted" style="font-size:0.7rem;">${f.sub}</div></div>
+        </div>`;
+      
+      // Mobile Grid
+      fListM.innerHTML += `
+        <div class="col-6">
+          <div class="p-2 border rounded bg-body text-center h-100" style="border-color: var(--border-color)!important;">
+            <div class="small fw-bold text-primary">${f.sub}</div>
+            <div class="fw-bold small text-truncate">${f.name}</div>
+          </div>
+        </div>`;
+    });
+  }
+
+  /* --- UI HELPERS --- */
+  function renderDateHeader() {
+    const s = new Date().toLocaleDateString("en-GB", { weekday:'short', day:'numeric', month:'long' });
+    document.getElementById("headerDateMobile").textContent = s;
+    document.getElementById("headerDateDesktop").textContent = s;
+  }
+  function toggleTheme() {
+    const c = document.documentElement.getAttribute('data-theme');
+    const n = c === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', n);
+    localStorage.setItem('theme', n);
+    updateThemeIcon(n);
+  }
+  function initTheme() {
+    const s = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', s);
+    updateThemeIcon(s);
+  }
+  function updateThemeIcon(t) {
+    const i = t==='dark' ? 'bi-sun-fill' : 'bi-moon-stars-fill';
+    document.getElementById('themeIconMobile').className = `bi ${i}`;
+    document.getElementById('themeIconDesktop').className = `bi ${i}`;
+    document.documentElement.style.setProperty('--invert-val', t==='dark'?'1':'0');
+  }
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+    document.getElementById(`tab-${id}`).classList.add('active');
+    document.querySelectorAll('.nav-item-btn').forEach(el => el.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
