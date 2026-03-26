@@ -1,0 +1,7 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+#cursor {
+  mix-blend-mode: difference;
+}

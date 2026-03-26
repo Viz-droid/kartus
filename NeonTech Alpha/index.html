@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neontech | Future Systems</title>
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.15/dist/lenis.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        #cursor {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+        }
+
+        .grain {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;    
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .font-mono { font-family: 'Space Mono', monospace; }
+        
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="relative bg-white text-black selection:bg-black selection:text-white">
+
+<div class="grain"></div>
+
+<div id="cursor"></div>
+
+<header class="fixed z-50 w-full top-0 px-6 md:px-20 transition-all duration-300" id="navbar">
+    <nav class="border-b border-white/20 py-4 flex justify-between items-center backdrop-blur-md">
+        <div class="flex items-center">
+            <div class="text-xl font-bold bg-white/10 hover:bg-white hover:text-black transition-colors rounded-lg px-4 py-1 text-white mix-blend-difference cursor-pointer">Neontech</div>
+        </div>
+        <div class="hidden md:flex gap-6 items-center">
+            <a href="#" class="text-sm uppercase tracking-widest text-white mix-blend-difference hover:opacity-50 transition cursor-pointer">Technology</a>
+            <a href="#" class="text-sm uppercase tracking-widest text-white mix-blend-difference hover:opacity-50 transition cursor-pointer">Studio</a>
+            <a href="#" class="text-sm uppercase tracking-widest text-white mix-blend-difference hover:opacity-50 transition cursor-pointer">Careers</a>
+            <div class="px-4 py-1 border border-white/30 rounded-full text-white mix-blend-difference hover:bg-white hover:text-black transition cursor-pointer text-sm">Contact</div>
+        </div>
+    </nav>
+</header>
+
+<section class="relative h-screen w-full overflow-hidden text-white">
+    <video autoplay loop muted playsinline class="absolute inset-0 object-cover w-full h-full grayscale">
+        <source src="https://cdn.pixabay.com/video/2017/07/23/10859-226635310_large.mp4">
+    </video>
+    <div class="absolute inset-0 bg-black/40"></div>
+    
+    <div class="relative z-10 h-full flex flex-col justify-end pb-20 px-6 md:px-20">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-10">
+            <div class="md:w-2/3">
+                <h1 class="text-5xl md:text-8xl font-medium tracking-tight leading-tight">
+                    Protein Sequencing <br> by Expansion
+                    <span class="block text-gray-400 font-serif italic">(ProSE™)</span>
+                </h1>
+            </div>
+            <div class="md:w-1/3 flex flex-col gap-6">
+                <p class="text-lg md:text-xl leading-relaxed text-gray-200">
+                    Advancing life science discovery with massively parallel, single-molecule
+                    <span class="underline decoration-1 underline-offset-4">proteome sequencing</span>.
+                </p>
+                <div>
+                    <button class="bg-white text-black hover:scale-95 transition-transform duration-300 rounded-full px-8 py-3 text-lg font-medium cursor-pointer">
+                        Start the Engine
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-[#EBFF00] text-white overflow-hidden">
+    <div class="marquee-container">
+        <div class="marquee-content text-4xl md:text-6xl font-black uppercase tracking-tighter">
+            <span class="mx-8 text-black">Craft</span>
+            <span class="mx-8 text-gray-600">Clarity</span>
+            <span class="mx-8">Precision</span>
+            <span class="mx-8 text-gray-600">Consistency</span>
+            <span class="mx-8 text-black">Emotion</span>
+            <span class="mx-8">Craft</span>
+            <span class="mx-8 text-gray-600">Clarity</span>
+            <span class="mx-8">Precision</span>
+            <span class="mx-8 text-gray-600">Consistency</span>
+            <span class="mx-8 text-black">Emotion</span>
+        </div>
+    </div>
+</section>
+
+<section class="bg-black text-white py-32 px-6 md:px-20 flex flex-col md:flex-row gap-12 items-start">
+    <div class="border-l-2 border-white pl-6 md:w-1/4">
+        <p class="uppercase text-xs font-bold tracking-[0.2em] mb-2">Editorial Issue</p>
+        <p class="font-mono text-4xl">024</p>
+    </div>
+
+    <div class="md:w-3/4">
+        <h2 class="text-5xl md:text-7xl font-extrabold leading-[1.05]">Ideas Worth Building.</h2>
+        <p class="mt-8 text-xl text-gray-600 max-w-2xl">
+            We don't just write code; we architect the future. By combining biological precision with digital scalability, we are redefining the substrate of innovation.
+        </p>
+        <button class="mt-12 text-lg underline underline-offset-8 hover:opacity-60 cursor-pointer">
+            Read the full story →
+        </button>
+    </div>
+</section>
+
+<section class="px-6 md:px-20 py-32 space-y-4">
+    <div class="group flex justify-between items-center border-b border-black/10 py-10 hover:bg-gray-50 transition px-4">
+        <h3 class="text-3xl md:text-5xl font-black group-hover:translate-x-4 transition-transform duration-300">01 — Solaris</h3>
+        <button class="text-sm md:text-lg border border-black rounded-full px-6 py-2 hover:bg-black hover:text-white transition cursor-pointer">Explore</button>
+    </div>
+
+    <div class="group flex justify-between items-center border-b border-black/10 py-10 hover:bg-gray-50 transition px-4">
+        <h3 class="text-3xl md:text-5xl font-black group-hover:translate-x-4 transition-transform duration-300">02 — Fragment UI</h3>
+        <button class="text-sm md:text-lg border border-black rounded-full px-6 py-2 hover:bg-black hover:text-white transition cursor-pointer">Explore</button>
+    </div>
+
+    <div class="group flex justify-between items-center border-b border-black/10 py-10 hover:bg-gray-50 transition px-4">
+        <h3 class="text-3xl md:text-5xl font-black group-hover:translate-x-4 transition-transform duration-300">03 — Alpine Studio</h3>
+        <button class="text-sm md:text-lg border border-black rounded-full px-6 py-2 hover:bg-black hover:text-white transition cursor-pointer">Explore</button>
+    </div>
+</section>
+
+<section class="px-6 md:px-20 py-32 bg-[#EBFF00] text-black">
+    <h2 class="text-5xl font-bold mb-20 tracking-tighter">What We Offer.</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20">
+        <div class="space-y-4">
+            <div class="h-1 w-10 bg-white mb-6"></div>
+            <h3 class="text-3xl font-semibold">Strategy</h3>
+            <p class="text-gray-600 text-lg leading-relaxed">Brand alignment, UX thinking, and vision clarity that cuts through the noise.</p>
+        </div>
+        <div class="space-y-4">
+            <div class="h-1 w-10 bg-white mb-6"></div>
+            <h3 class="text-3xl font-semibold">Design</h3>
+            <p class="text-gray-600 text-lg leading-relaxed">Interfaces, identity systems, and aesthetic direction for the modern web.</p>
+        </div>
+        <div class="space-y-4">
+            <div class="h-1 w-10 bg-white mb-6"></div>
+            <h3 class="text-3xl font-semibold">Engineering</h3>
+            <p class="text-gray-600 text-lg leading-relaxed">Robust web, mobile, and digital experience building with clean code.</p>
+        </div>
+    </div>
+</section>
+
+<section class="relative px-6 md:px-20 py-32 overflow-hidden bg-black text-white">
+    <div class="absolute left-6 md:left-1/2 top-0 bottom-0 border-r border-dashed border-gray-300 md:-translate-x-1/2"></div>
+
+    <div class="w-full max-w-7xl mx-auto space-y-20">
+
+        <div class="flex flex-col md:flex-row justify-start pl-8 md:pl-0">
+            <div class="flex items-center gap-6 md:w-1/2 md:pr-10">
+                <img class="hidden md:block h-64 w-48 object-cover rotate-3 rounded-2xl grayscale hover:grayscale-0 transition duration-500" src="https://cdn.pixabay.com/photo/2016/11/29/08/50/candlelights-1868525_1280.jpg" alt="img1">
+                <div class="text-2xl font-medium z-10 py-2">Brand Strategy</div>
+                <div class="hidden md:block grow border-b border-dashed border-gray-300"></div>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-end pl-8 md:pl-0">
+            <div class="flex items-center gap-6 md:w-1/2 md:pl-10">
+                <div class="hidden md:block grow border-b border-dashed border-gray-300"></div>
+                <div class="text-2xl font-medium z-10 py-2 order-2 md:order-1">Web Design & UX</div>
+                <img class="hidden md:block h-64 w-48 object-cover -rotate-3 rounded-2xl grayscale hover:grayscale-0 transition duration-500 order-1 md:order-2" src="https://cdn.pixabay.com/photo/2014/05/02/12/41/candle-335965_1280.jpg" alt="img1">
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-start pl-8 md:pl-0">
+            <div class="flex items-center gap-6 md:w-1/2 md:pr-10">
+                <img class="hidden md:block h-64 w-48 object-cover -rotate-2 rounded-2xl grayscale hover:grayscale-0 transition duration-500" src="https://cdn.pixabay.com/photo/2018/08/07/20/11/hand-3590639_960_720.jpg" alt="img1">
+                <div class="text-2xl font-medium z-10 py-2">Product Identity</div>
+                <div class="hidden md:block grow border-b border-dashed border-gray-300"></div>
+            </div>
+        </div>
+        
+        <div class="flex flex-col md:flex-row justify-end pl-8 md:pl-0">
+            <div class="flex items-center gap-6 md:w-1/2 md:pl-10">
+                <div class="hidden md:block grow border-b border-dashed border-gray-300"></div>
+                <div class="text-2xl font-medium z-10 py-2 order-2 md:order-1">AI Platforms</div>
+                <img class="hidden md:block h-64 w-48 object-cover rotate-2 rounded-2xl grayscale hover:grayscale-0 transition duration-500 order-1 md:order-2" src="https://cdn.pixabay.com/photo/2020/12/26/16/47/christmas-5861895_1280.jpg" alt="img1">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="px-6 md:px-20 py-32 bg-white">
+    <h2 class="text-5xl font-bold mb-16">What people are saying...</h2>
+
+    <div class="space-y-12 max-w-5xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+            <img class="h-16 w-16 rounded-full object-cover grayscale" src="https://cdn.pixabay.com/photo/2017/11/19/07/30/girl-2961959_1280.jpg" alt="profile-pic-1">
+            <div class="bg-[#EBFF00] p-8 rounded-3xl rounded-tl-none shadow-sm">
+                <p class="text-xl md:text-2xl font-medium">“Every meeting felt like creativity was the default setting. They didn't just build a site, they built a movement for us.”</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6 items-start justify-end">
+            <div class="bg-black text-white p-8 rounded-3xl rounded-br-none shadow-xl">
+                <p class="text-xl text-[#EBFF00] md:text-2xl font-medium">“We expected deliverables. We received transformation. The ROI was evident within week two.”</p>
+            </div>
+            <img class="h-16 w-16 rounded-full object-cover grayscale" src="https://cdn.pixabay.com/photo/2022/04/22/13/07/woman-7149712_1280.jpg" alt="profile-pic-2">
+        </div>
+    </div>
+</section>
+
+<section class="px-6 md:px-20 py-40 bg-[#EBFF00] text-black flex flex-col items-center text-center">
+    <div class="h-32 w-20 bg-gradient-to-b from-white to-transparent opacity-20 rounded-full blur-xl mb-10"></div>
+
+    <h2 class="text-4xl md:text-6xl font-light tracking-widest uppercase">
+        Access requires commitment.
+    </h2>
+
+    <p class="mt-6 text-gray-600 text-lg">One price. One door. Infinite upside.</p>
+
+    <div class="grid md:grid-cols-2 gap-10 mt-16 text-left max-w-4xl w-full">
+        <div class="bg-black text-white p-8 rounded-xl backdrop-blur-sm border border-white/10">
+            <h4 class="font-mono text-gray-400 text-sm mb-4">THE PROTOCOL</h4>
+            <div class="font-mono text-sm space-y-4">
+                <p>Q: How does it work?<br><span class="text-white">A: ███████████████████████.</span></p>
+                <p>Q: Who is it for?<br><span class="text-white">A: ████████████ (you'll know).</span></p>
+            </div>
+        </div>
+        <div class="flex flex-col justify-center items-center bg-white text-black rounded-xl p-8">
+            <div class="text-5xl font-black mb-2">$2,400</div>
+            <div class="text-sm uppercase tracking-widest text-gray-500 mb-8">Per Year</div>
+            <button class="w-full py-4 border border-black rounded-full text-lg hover:bg-black hover:text-white transition cursor-pointer">
+                Request Access
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="h-[80vh] flex flex-col justify-end p-6 md:p-20 relative group">
+    <video autoplay muted loop class="absolute inset-0 object-cover w-full h-full grayscale group-hover:grayscale-0 transition duration-700">
+        <source src="https://cdn.pixabay.com/video/2019/09/12/26790-361092012_large.mp4">
+    </video>
+    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-700"></div>
+    
+    <div class="relative z-10">
+        <h2 class="text-black text-6xl md:text-8xl font-bold mb-4 tracking-tighter">Nebula OS</h2>
+        <button class="text-white text-xl underline underline-offset-8 hover:no-underline cursor-pointer">
+            View case study →
+        </button>
+    </div>
+</section>
+
+<section class="px-6 md:px-20 py-32 bg-black text-white">
+    <h2 class="text-5xl text-white md:text-6xl font-bold mb-20">Humans behind the craft.</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="group cursor-pointer">
+            <div class="overflow-hidden rounded-xl mb-6">
+                <img class="w-full aspect-[3/4] object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-500" src="https://cdn.pixabay.com/photo/2017/06/01/00/44/smiling-2362136_1280.jpg" alt="Mia">
+            </div>
+            <h3 class="text-2xl text-[#EBFF00] font-semibold">Mia Carter</h3>
+            <p class="text-gray-500 font-mono text-sm mt-1">Creative Director</p>
+        </div>
+
+        <div class="group cursor-pointer">
+            <div class="overflow-hidden rounded-xl mb-6">
+                <img class="w-full aspect-[3/4] object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-500" src="https://cdn.pixabay.com/photo/2016/11/29/09/38/adult-1868750_1280.jpg" alt="Elio">
+            </div>
+            <h3 class="text-2xl text-[#EBFF00] font-semibold">Elio Reyes</h3>
+            <p class="text-gray-500 font-mono text-sm mt-1">Engineering Lead</p>
+        </div>
+
+        <div class="group cursor-pointer">
+            <div class="overflow-hidden rounded-xl mb-6">
+                <img class="w-full aspect-[3/4] object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-500" src="https://cdn.pixabay.com/photo/2020/11/24/09/56/woman-5772021_1280.jpg" alt="Aria">
+            </div>
+            <h3 class="text-2xl text-[#EBFF00] font-semibold">Aria Quinn</h3>
+            <p class="text-gray-500 font-mono text-sm mt-1">Research + Systems</p>
+        </div>
+    </div>
+</section>
+
+<section class="px-6 md:px-20 py-36 bg-[#EBFF00] text-black">
+    <h2 class="text-4xl md:text-7xl font-light max-w-5xl leading-tight">
+        Design isn’t decoration. <br>
+        It’s <span class="font-bold text-white border-b-4 border-white">decision making.</span>
+    </h2>
+    <p class="mt-10 text-gray-600 text-xl max-w-2xl leading-relaxed">
+        Every element serves meaning—nothing extra, nothing missing.
+        We operate at the intersection of modern design, engineering, and storytelling.
+    </p>
+</section>
+
+<section class="h-[70vh] flex flex-col items-center justify-center text-center px-6">
+    <p class="text-xs md:text-sm tracking-[0.3em] uppercase text-gray-500 mb-6 font-mono">
+        This doesn't repeat
+    </p>
+    <h2 class="text-5xl md:text-8xl font-black leading-tight max-w-4xl tracking-tighter">
+        The only wrong move<br>is doing nothing.
+    </h2>
+    <button class="mt-16 px-12 py-5 bg-black text-white rounded-full text-xl hover:scale-105 transition-transform duration-300 cursor-pointer">
+        Make your move →
+    </button>
+</section>
+
+<footer class="px-6 md:px-20 py-20 bg-black text-white flex flex-col items-center space-y-10 border-t border-white/10">
+    <div class="text-6xl animate-pulse">⟡</div>
+    <div class="flex flex-col items-center gap-4">
+        <p class="uppercase tracking-[0.25em] text-xs opacity-60">You’ve Reached The Edge</p>
+        <p class="text-xs text-gray-600">© 2025 Neontech Inc.</p>
+    </div>
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-8 py-3 border border-white/30 rounded-full hover:bg-white hover:text-black transition cursor-pointer text-sm">
+        Return to Light ↑
+    </button>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script> 
+<script src="script.js"></script>
+
+</body>
+</html>
