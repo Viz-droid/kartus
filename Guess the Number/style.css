@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Press Start 2P', sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 5rem;
+  padding: 5rem 0;
+}
+
+.between {
+  font-size: 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 2rem;
+}
+
+.again {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.secretNumber {
+  text-align: center;
+  padding: 1rem 2rem;
+  font-size: 5rem;
+  background-color: #fff;
+  color: #000;
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+  margin: 5rem;
+  font-size: 2rem;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+}
+
+.guess {
+  font-family: 'Press Start 2P', sans-serif;
+  text-align: center;
+  border: solid 0.5rem #fff;
+  background-color: #000;
+  font-size: 4rem;
+  text-align: center;
+  max-width: 10rem;
+  padding: 2rem 4rem;
+  color: #fff;
+  outline: none;
+}
+
+.check {
+  text-align: center;
+  max-width: 15em;
+}
+
+.btn {
+  font-family: 'Press Start 2P', sans-serif;
+  background-color: #fff;
+  border: none;
+  margin: 2rem;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out; 
+}
+.btn:active {
+  transform: scale(0.9);
+}
