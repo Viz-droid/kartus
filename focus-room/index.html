@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cortex Hub | Focus. Prove It. Grow.</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-display: 'Bebas Neue', cursive;
+            --font-sans: 'Syne', sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #080808;
+            color: #FAFAF5;
+            cursor: none;
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* ─── Grain Overlay ─── */
+        #grain {
+            position: fixed;
+            inset: -150px;
+            width: calc(100% + 300px);
+            height: calc(100% + 300px);
+            background: white;
+            filter: url('#noise-filter');
+            opacity: 0.028;
+            pointer-events: none;
+            z-index: 9997;
+        }
+
+        /* ─── Scrollbar ─── */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.25); border-radius: 4px; }
+
+        /* ─── Liquid Cursor ─── */
+        .cursor-trail {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            background: #C9A84C;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+
+        .gooey-filter-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            filter: url('#goo');
+        }
+
+        /* ─── Glass Panel — Kinetica Edition ─── */
+        .glass-panel {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(201,168,76,0.14);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+        }
+
+        /* ─── Nav Link Active State ─── */
+        .nav-link.active {
+            color: #C9A84C;
+            text-decoration: underline;
+            text-underline-offset: 8px;
+        }
+
+        /* ─── Timer SVG ─── */
+        .timer-svg { transform: rotate(-90deg); }
+
+        /* ─── Gold Divider ─── */
+        .k-divider {
+            display: block;
+            width: 48px;
+            height: 1px;
+            background: linear-gradient(90deg, #C9A84C, transparent);
+        }
+
+        /* ─── Gold Shimmer ─── */
+        @keyframes goldPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .gold-pulse { animation: goldPulse 2.4s ease-in-out infinite; }
+
+        /* ─── Fade in ─── */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Panel decorative lines ─── */
+        .panel-vline {
+            position: absolute;
+            top: 25%; bottom: 25%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.25), transparent);
+            pointer-events: none;
+        }
+        .panel-hline {
+            position: absolute;
+            left: 25%; right: 25%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201,168,76,0.25), transparent);
+            pointer-events: none;
+        }
+
+        /* ─── Custom scrollbar for modals ─── */
+        .custom-scrollbar::-webkit-scrollbar { width: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); }
+
+        /* ─── Kinetica border glow on focus ─── */
+        input:focus, textarea:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C9A84C]/20 selection:text-[#C9A84C]">
+
+    <!-- ─── SVG Filter Definitions ─── -->
+    <svg style="position:absolute;width:0;height:0;overflow:hidden;">
+        <defs>
+            <!-- Gooey cursor filter -->
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+                <feColorMatrix in="blur" mode="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
+                    result="goo"/>
+                <feBlend in="SourceGraphic" in2="goo"/>
+            </filter>
+            <!-- Grain noise filter -->
+            <filter id="noise-filter" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Grain overlay -->
+    <div id="grain" aria-hidden="true"></div>
+
+    <!-- Liquid cursor container -->
+    <div class="gooey-filter-container" id="cursor-container"></div>
+
+    <!-- App root -->
+    <div id="app"></div>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
