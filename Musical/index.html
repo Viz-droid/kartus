@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Musical🎼</title>
+  </head>
+
+  <body class="bg-zinc-400">
+    <section
+      id="music-section"
+      class="min-h-screen flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 px-6 py-8"
+    >
+      <div id="miniDisc-container" class="relative w-64 sm:w-80 md:w-auto">
+        <section class="absolute inset-0 flex items-center justify-center z-10">
+          <div
+            id="play-pause-btn"
+            class="bg-red-200 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center rounded-full shadow-sm cursor-pointer hover:bg-red-300 transition duration-300 active:scale-90"
+          >
+            <svg
+              id="play-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-8 h-8 md:w-10 md:h-10 text-white"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.5 3.75v16.5c0 .621.67 1.01 1.21.703l13.5-8.25a.81.81 0 000-1.406l-13.5-8.25a.81.81 0 00-1.21.703z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            <svg
+              id="pause-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-8 h-8 md:w-10 md:h-10 text-white hidden"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M6.75 5.25A.75.75 0 017.5 4.5h2.25a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm6.75 0a.75.75 0 01.75-.75h2.25a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75h-2.25a.75.75 0 01-.75-.75V5.25z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </section>
+
+        <img
+          id="miniDisc"
+          src="/database/image/pngwing.com.png"
+          alt="miniDisc"
+          class="w-full"
+        />
+      </div>
+
+      <div class="text-center md:text-left">
+        <h1
+          class="text-4xl sm:text-6xl md:text-9xl font-['Boldonse'] leading-tight"
+        >
+          Musical
+        </h1>
+
+        <p class="text-lg sm:text-2xl md:text-4xl mt-5">
+          Press
+          <button
+            id="space-btn"
+            class="bg-rose-400 px-4 py-2 rounded-xl text-white text-sm sm:text-lg md:text-2xl font-semibold active:scale-90 transition"
+          >
+            spacebar
+          </button>
+          to change the music
+        </p>
+      </div>
+    </section>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+      integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
